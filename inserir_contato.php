@@ -44,7 +44,7 @@
 			echo("Preencha o <b>email</b>");
 		} else {
 			// abre a conexao com o banco de dados
-			$conn = mysqli_connect("localhost", "root", "", "agenda");
+			$conn = mysqli_connect("10.1.1.128", "root", "", "agenda");
 
 			// testa se a conexao com o banco de dados foi bem sucedida
 			if ($conn) {
@@ -53,7 +53,7 @@
 				$numero = $_POST["numero"];
 				$email = $_POST["email"];
 
-				$sql = "INSERT INTO contatos (nome, num, nasc, email) VALUES ('$nome', '$numero', '$nascimento', '$email') ";
+				$sql = "INSERT INTO contatos (nome, numero, nasc, email) VALUES ('$nome', '$numero', '$nascimento', '$email') ";
 				// echo para debugar a consulta sql gerada
 				// echo ($sql);
 
