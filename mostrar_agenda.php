@@ -56,7 +56,7 @@
 				while ($registro = mysqli_fetch_array($registros) ){
 					//echo ("Nome: " . $registro["nome"]);
 					//echo ("<tr><td>" . $registro["nome"] . "</td><td>". $registro["email"] . "</td><td>" . $registro["numero"] . "</td></tr>");
-					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td><a href='excluir_contato.php?id_contato=$registro[id]'>Excluir</a></td></tr>");
+					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td><a href='excluir_contato.php?id_contato=$registro[id]'>Excluir</a> <a href='editar_contato.php?id_contato=$registro[id]'>Editar</a></td></tr>");
 				}
 
 				echo ("</table>");
