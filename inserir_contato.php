@@ -4,16 +4,52 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Cadastro de usuário</title>
+	<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 	<form method="POST" >
 		<fieldset>
 			<legend>Adicionando um novo usuário</legend>
-			Nome: <input type="text" name="nome"> <br>
-			Data de nascimento: <input type="date" name="nascimento"> <br>
-			Numero telefônico: <input type="text" name="numero"> <br>
-			Email: <input type="email" name="email" > <br>
-			<input type="submit" name="enviar" value="Enviar">
+			<div class="input-group">
+				<label>Nome</label>
+			 	<input type="text" name="nome">
+			</div>
+			<div class="input-group">
+				<label>Data de nascimento</label>
+				<input type="date" name="nascimento"> 
+			</div>
+			<div class="input-group">
+				<label>Numero telefônico</label>
+				<input type="text" name="numero"> 
+			</div>
+			<div class="input-group">
+				<label>Email</label> 
+				<input type="email" name="email" >
+			</div>
+			<div class="input-group">
+				<label>Grupo</label>
+				<select name="grupo">
+					<?php
+						// abre a conexao com o banco de dados
+						$conn = mysqli_connect("127.0.0.1", "root", "", "agenda");
+
+						if ($conn) {
+							$sql = "SELECT * FROM grupos ORDER BY nome ASC";
+
+							$registros = mysqli_query($conn, $sql);
+
+							if (mysqli_num_rows($registros) > 0){
+
+								while ($registro = mysqli_fetch_array($registros) ){
+									echo("<option value='$registro[id]'>$registro[nome]</option>");
+								}
+							}							
+						}
+					?>
+				</select>
+			</div>
+
+			<input type="submit" name="enviar" value="Enviar" class="btn">
 		</fieldset>
 	</form>
 	<style type="text/css">
@@ -43,8 +79,6 @@
 		} else if(empty($_POST["email"])){
 			echo("Preencha o <b>email</b>");
 		} else {
-			// abre a conexao com o banco de dados
-			$conn = mysqli_connect("10.1.1.128", "root", "", "agenda");
 
 			// testa se a conexao com o banco de dados foi bem sucedida
 			if ($conn) {
@@ -52,8 +86,9 @@
 				$nascimento = $_POST["nascimento"];
 				$numero = $_POST["numero"];
 				$email = $_POST["email"];
+				$id_grupo = $_POST["grupo"];
 
-				$sql = "INSERT INTO contatos (nome, numero, nasc, email) VALUES ('$nome', '$numero', '$nascimento', '$email') ";
+				$sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
 				// echo para debugar a consulta sql gerada
 				// echo ($sql);
 
