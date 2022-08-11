@@ -12,7 +12,8 @@
 
 		// testando se a conexão foi estabelecida com sucesso
 		if ($conn){
-			$sql = "SELECT * FROM contatos ORDER BY nome ASC";
+			//$sql = "SELECT * FROM contatos ORDER BY nome ASC";
+			$sql = "SELECT contatos.id, contatos.nome, nasc, email, numero, grupos.nome AS grupo FROM contatos, grupos WHERE grupos.id = id_grupo ORDER BY contatos.nome ASC "; // consulta ligando as duas tabelas para exibir o nome do grupo
 
 			$registros = mysqli_query($conn, $sql);
 
@@ -22,12 +23,12 @@
 				echo ("<h1>Mostrando os contatos da agenda</h1>");
 
 				// abrindo a tabela
-				echo ("<table><tr><th>Nome</th><th>Email</th><th>Número</th><th>Opções</th></tr>");
+				echo ("<table><tr><th>Nome</th><th>Email</th><th>Número</th><th>Grupo</th><th>Opções</th></tr>");
 				
 				while ($registro = mysqli_fetch_array($registros) ){
 					//echo ("Nome: " . $registro["nome"]);
 					//echo ("<tr><td>" . $registro["nome"] . "</td><td>". $registro["email"] . "</td><td>" . $registro["numero"] . "</td></tr>");
-					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td><a href='excluir_contato.php?id_contato=$registro[id]' class='del_btn'>Excluir</a> <a href='editar_contato.php?id_contato=$registro[id]' class='edit_btn'>Editar</a></td></tr>");
+					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td>$registro[grupo]</td><td><a href='excluir_contato.php?id_contato=$registro[id]' class='del_btn'>Excluir</a> <a href='editar_contato.php?id_contato=$registro[id]' class='edit_btn'>Editar</a></td></tr>");
 				}
 
 				echo ("</table>");
