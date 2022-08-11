@@ -27,7 +27,8 @@
 				$nome 	= $contato["nome"];
 				$nasc 	= $contato["nasc"];
 				$num 	= $contato["numero"];
-				$email	= $contato["email"]; 
+				$email	= $contato["email"];
+				$id_grupo = $contato["id_grupo"]; // necessário para pré-selecionar o grupo de um contato
 
 			} else {
 				echo ("Contato não encontrado");
@@ -44,6 +45,28 @@
 			Data de nascimento: <input type="date" name="nascimento" value="<?php echo ($nasc); ?>"> <br>
 			Numero telefônico: <input type="text" name="numero" value="<?php echo($num); ?>"> <br>
 			Email: <input type="email" name="email" value="<?php echo($email); ?>" > <br>
+			<select name="grupo">
+				<?php 
+					$conn = mysqli_connect("127.0.0.1", "root", "", "agenda");
+
+					if ($conn) {
+						$sql = "SELECT * FROM grupos ORDER BY nome ASC";
+
+						$registros = mysqli_query($conn, $sql);
+
+						if (mysqli_num_rows($registros) > 0){
+							while ($registro = mysqli_fetch_array($registros)){
+								
+								if ($registro["id"] == $id_grupo) {
+									echo ("<option value='$registro[id]' selected>$registro[nome]</option>");
+								} else {
+									echo ("<option value='$registro[id]'>$registro[nome]</option>");
+								}
+							}
+						}
+					}
+				?>
+			</select>
 			<input type="submit" name="enviar" value="Salvar">
 		</fieldset>
 	</form>
@@ -79,9 +102,10 @@
 			$nascimento = $_POST["nascimento"];
 			$numero = $_POST["numero"];
 			$email = $_POST["email"];
+			$grupo = $_POST["grupo"];	// campo que contém o id do grupo selecionado
 
 			// para editar o registro, usa-se o UPDATE
-			$sql = "UPDATE contatos SET nome = '$nome', nasc = '$nascimento', numero = '$numero', email = '$email' WHERE id = $id_contato";
+			$sql = "UPDATE contatos SET nome = '$nome', nasc = '$nascimento', numero = '$numero', email = '$email', id_grupo = $grupo WHERE id = $id_contato";
 
 			// echo para debugar a consulta sql gerada
 			// echo ($sql);
