@@ -1,35 +1,28 @@
 body{
 	font-size:  19px;
+	/*font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;  adicionei */
 }
-.edit_btn{
-	background: #ff9500;
+.btn {
 	color:  white;
 	padding: 10px;
 	font-size: 15px;
 	border-radius:  5px;
-	border: none;
 	text-decoration: none;
+	border: none;
+}
+.edit_btn{
+	background: #ff9500;
 }
 .del_btn{
 	background: #ff6347;
-	color: white;
-	padding: 10px;
-	font-size: 15px;
-	border-radius: 5px;
-	border: none;
-	text-decoration: none;
 }
-.btn{
+.btn_primary{
 	background: #5f9ea0;
-	color: white;
-	padding: 10px;
-	font-size:  15px;
-	border-radius:  5px;
-	border: none;
 }
+
 table {
 	border-collapse: collapse;
-	width:  100%;	
+	width:  100%;	;
 }
 th {
 	height: 30px;
@@ -92,3 +85,25 @@ fieldset {
 	background: white;
 }
 
+#conteudo{
+	width: 80%;
+	margin: 0 auto;
+	transition: 0.3s;
+}
+
+h1 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+@media (max-width: 999px){
+	#conteudo {
+		width: 94%;
+		margin: 0 auto;
+		transition: 0.3s;
+	}
+
+	.dados {
+		overflow-x: auto;
+	}
+}
