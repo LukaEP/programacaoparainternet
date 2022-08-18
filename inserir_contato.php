@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Cadastro de usuário</title>
-	<link rel="stylesheet" href="estilo.css">
+	<link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 	<form method="POST" >
@@ -49,7 +49,7 @@
 				</select>
 			</div>
 
-			<input type="submit" name="enviar" value="Enviar" class="btn">
+			<input type="submit" name="enviar" value="Enviar" class="btn btn_primary">
 		</fieldset>
 	</form>
 	<style type="text/css">

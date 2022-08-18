@@ -4,14 +4,20 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Mostrando da minha agenda</title>
-	<link rel="stylesheet" href="css/estilo.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link rel="stylesheet" href="estilo.css">
+	<style>
+
+	</style>
 </head>
 <body>
-	<?php
-		require_once("menu.php");
-	?>
-	<div id="conteudo">
+	<nav>
+		<a href="#">Mostrar agenda</a>
+		<ul>
+			<li>Contatos</li>
+			<li>Grupos</li>
+		</ul>
+	</nav>
 	<?php
 		$conn = mysqli_connect("127.0.0.1", "root", "", "agenda"); // abre a conexão com o banco de dados
 
@@ -26,10 +32,6 @@
 				// codigo para mostrar os registros
 
 				echo ("<h1>Mostrando os contatos da agenda</h1>");
-				
-				echo ("<a href='inserir_contato.php' class='btn btn_primary'>Inserir contato</a><br><br>");
-
-				echo ("<div class='dados'>");
 
 				// abrindo a tabela
 				echo ("<table><tr><th>Nome</th><th>Email</th><th>Número</th><th>Grupo</th><th>Opções</th></tr>");
@@ -37,11 +39,10 @@
 				while ($registro = mysqli_fetch_array($registros) ){
 					//echo ("Nome: " . $registro["nome"]);
 					//echo ("<tr><td>" . $registro["nome"] . "</td><td>". $registro["email"] . "</td><td>" . $registro["numero"] . "</td></tr>");
-					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td>$registro[grupo]</td><td><a href='excluir_contato.php?id_contato=$registro[id]' class='btn del_btn'>Excluir</a> <a href='editar_contato.php?id_contato=$registro[id]' class='btn edit_btn'>Editar</a></td></tr>");
+					echo ("<tr><td>$registro[nome]</td><td>$registro[email]</td><td>$registro[numero]</td><td>$registro[grupo]</td><td><a href='excluir_contato.php?id_contato=$registro[id]' class='del_btn'>Excluir</a> <a href='editar_contato.php?id_contato=$registro[id]' class='edit_btn'>Editar</a></td></tr>");
 				}
 
 				echo ("</table>");
-				echo ("</div>");
 			} else {
 				echo ("<h1>Não há nada para ser mostrado :( </h1>
 					");
@@ -55,7 +56,10 @@
 
 
 	?>
-	</div>
-	<script src="js/mobile-navbar.js"></script>
+
+	<footer>
+		<a href="#topo">Voltar</a>
+		<p>Desenvolvido por</p>
+	</footer>
 </body>
 </html>
