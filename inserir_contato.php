@@ -30,21 +30,18 @@
 				<label>Grupo</label>
 				<select name="grupo">
 					<?php
-						// abre a conexao com o banco de dados
-						$conn = mysqli_connect("127.0.0.1", "root", "", "agenda");
+						require_once("conecta.php");						
+						
+						$sql = "SELECT * FROM grupos ORDER BY nome ASC";
 
-						if ($conn) {
-							$sql = "SELECT * FROM grupos ORDER BY nome ASC";
+						$registros = mysqli_query($conn, $sql);
 
-							$registros = mysqli_query($conn, $sql);
+						if (mysqli_num_rows($registros) > 0){
 
-							if (mysqli_num_rows($registros) > 0){
-
-								while ($registro = mysqli_fetch_array($registros) ){
-									echo("<option value='$registro[id]'>$registro[nome]</option>");
-								}
-							}							
-						}
+							while ($registro = mysqli_fetch_array($registros) ){
+								echo("<option value='$registro[id]'>$registro[nome]</option>");
+							}
+						}							
 					?>
 				</select>
 			</div>
@@ -78,38 +75,29 @@
 			echo("Preencha o <b>número telefônico</b>");
 		} else if(empty($_POST["email"])){
 			echo("Preencha o <b>email</b>");
-		} else {
+		} else {		
+			$nome = $_POST["nome"];
+			$nascimento = $_POST["nascimento"];
+			$numero = $_POST["numero"];
+			$email = $_POST["email"];
+			$id_grupo = $_POST["grupo"];
 
-			// testa se a conexao com o banco de dados foi bem sucedida
-			if ($conn) {
-				$nome = $_POST["nome"];
-				$nascimento = $_POST["nascimento"];
-				$numero = $_POST["numero"];
-				$email = $_POST["email"];
-				$id_grupo = $_POST["grupo"];
+			$sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
+			// echo para debugar a consulta sql gerada
+			// echo ($sql);
 
-				$sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
-				// echo para debugar a consulta sql gerada
-				// echo ($sql);
-
-				// mandando executar a consulta sql
-				// a funcao mysqli_query retorna true se a consulta foi executada com sucesso
-				if (mysqli_query($conn, $sql)){
-					echo ("Contato adicionado com sucesso!<br>");
-				} else {
-					// erro ao executar a consulta
-					echo ("Erro: $sql <br>" . mysqli_error($conn) );
-				}
-
-				// encerrando a conexao
-				mysqli_close($conn);
+			// mandando executar a consulta sql
+			// a funcao mysqli_query retorna true se a consulta foi executada com sucesso
+			if (mysqli_query($conn, $sql)){
+				echo ("Contato adicionado com sucesso!<br>");
 			} else {
-				// informando qual o erro que houve na hora da conexao
-				echo ("Falha na conexão " . mysqli_connect_error() );
+				// erro ao executar a consulta
+				echo ("Erro: $sql <br>" . mysqli_error($conn) );
 			}
-	
 
-
+			// encerrando a conexao
+			mysqli_close($conn);
+			
 		}
 	} 
 	?>
