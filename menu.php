@@ -10,6 +10,7 @@
 			<li><a href="mostrar_agenda.php">Início</a></li>
 			<li><a href="mostrar_agenda.php">Gerenciar contatos</a></li>
 			<li><a href="mostrar_grupos.php">Gerenciar grupos</a></li>
+			<li><a href="sair.php">Sair</a></li>
 		</ul>
 	</nav>
 </header>
