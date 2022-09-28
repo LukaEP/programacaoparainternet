@@ -96,6 +96,20 @@ h1 {
 	margin-bottom: 10px;
 }
 
+.msg {
+	margin: 30px auto;
+	padding:  10px;
+	border-radius: 5px;
+	width: 100%;
+	text-align: center;
+}
+
+.sucesso{
+	color: #3c763d;
+	background: #dff0d8;
+	border:  1px solid #3c763d;
+}
+
 @media (max-width: 999px){
 	#conteudo {
 		width: 94%;
