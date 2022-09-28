@@ -1,3 +1,6 @@
+<?php
+	require_once("protege.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +15,16 @@
 		require_once("menu.php");
 	?>
 	<div id="conteudo">
+		
 	<?php
+
+		if (isset($_SESSION["msg_sucesso"])){
+			echo ('<div class="msg sucesso" id="msg">'. $_SESSION["msg_sucesso"] .'</div>');
+			unset($_SESSION["msg_sucesso"]);
+		}
+
 		require_once("conecta.php");
 
-		
 		//$sql = "SELECT * FROM contatos ORDER BY nome ASC";
 		$sql = "SELECT contatos.id, contatos.nome, nasc, email, numero, grupos.nome AS grupo FROM contatos, grupos WHERE grupos.id = id_grupo ORDER BY contatos.nome ASC "; // consulta ligando as duas tabelas para exibir o nome do grupo
 
@@ -52,6 +61,9 @@
 
 	?>
 	</div>
+	<script>
+		setTimeout(() => { document.getElementById("msg").style.display = 'none'; }, 5000);
+	</script>
 	<script src="js/mobile-navbar.js"></script>
 </body>
 </html>

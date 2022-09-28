@@ -1,3 +1,6 @@
+<?php
+	require_once("protege.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,16 +52,7 @@
 			<input type="submit" name="enviar" value="Enviar" class="btn btn_primary">
 		</fieldset>
 	</form>
-	<style type="text/css">
-		input:invalid {
-			animation: shake 300ms;
-		}
-		@keyframes shake {
-			25% { transform: translateX(4px) ; }
-			50% { transform: translateX(-4px); }
-			25% { transform: translateX(4px); }
-		}
-	</style>
+	
 	<?php
 	// isset testa se uma variavel existe
 	if (isset($_POST['enviar']) == true) {
@@ -82,14 +76,15 @@
 			$email = $_POST["email"];
 			$id_grupo = $_POST["grupo"];
 
-			$sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
+			echo $sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
 			// echo para debugar a consulta sql gerada
 			// echo ($sql);
 
 			// mandando executar a consulta sql
 			// a funcao mysqli_query retorna true se a consulta foi executada com sucesso
 			if (mysqli_query($conn, $sql)){
-				echo ("Contato adicionado com sucesso!<br>");
+				$_SESSION["msg_sucesso"] = "Contato adicionado com sucesso!";
+				header("location: mostrar_agenda.php");
 			} else {
 				// erro ao executar a consulta
 				echo ("Erro: $sql <br>" . mysqli_error($conn) );
