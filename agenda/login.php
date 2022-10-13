@@ -106,7 +106,7 @@
 				</div>
 				<div class="card-content-area">
 					<label for="password">Senha</label>
-					<input type="password" id="password" name="senha" autocomplete="off">
+					<input type="text" id="password" name="senha" autocomplete="off">
 				</div>
 				<div class="card-footer">
 					<input type="submit" value="Login" class="submit" name="enviar">
@@ -117,19 +117,21 @@
 	</div>
 	<?php
 		if (isset($_POST["enviar"])) {
-			$usuario = $_POST["usuario"];
-			$senha = $_POST["senha"];
+			
+			require_once("conecta.php");
+			
+			// a função mysqli_real_escape_string acrescenta caracteres da escape na string, impedindo que ela seja executada como comandos SQL, ou seja, qualquer informação será tratada como texo ou número
+			$usuario = mysqli_real_escape_string($conn, $_POST["usuario"]);
+			$senha = mysqli_real_escape_string($conn, $_POST["senha"]);
 
 			// usuario preencheu os dois campos
 			if (!empty($usuario) && !empty($senha)) {
 
-				require_once("conecta.php");
-
-				$sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') AND senha='$senha' ";
+				echo  $sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') AND senha='$senha' ";
 
 				$resultado = mysqli_query($conn, $sql);
 
-				if (mysqli_num_rows($resultado) == 1) {
+				if (mysqli_num_rows($resultado) > 0) {
 					$_SESSION["usuario"] = $usuario;
 					header("location: mostrar_agenda.php");
 

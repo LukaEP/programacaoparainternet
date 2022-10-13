@@ -1,3 +1,4 @@
+<?php #include("protege.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +14,26 @@
 		$conn = mysqli_connect("127.0.0.1", "root", "", "agenda");
 
 		if ($conn) {
-			$sql = "SELECT * FROM contatos WHERE id = $id_contato";
+			/* neste exemplo estamos apenas tratando a entrada de dados da URL */
+			 
+			// definindo a consulta que será executada
+			$sql = "SELECT * FROM contatos WHERE id = ?";
 
-			$resultado = mysqli_query($conn, $sql);
+			// stmt = abreviacao de statement
+			$stmt = mysqli_prepare($conn, $sql);
+
+			/* definindo os parametros (?) da consulta
+				i - int
+				f - float
+				s - string
+			*/
+			mysqli_stmt_bind_param($stmt, "i", $id_contato);
+
+			// executar a consulta
+			mysqli_execute($stmt);
+
+			// armazenando o resultado da consulta na variavel
+			$resultado = mysqli_stmt_get_result($stmt);
 
 			// a edicao vai retornar apenas uma linha, pois a busca é pela primary key da tabela
 			if (mysqli_num_rows($resultado) == 1) {
