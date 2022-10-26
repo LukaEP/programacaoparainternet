@@ -124,10 +124,15 @@
 			$usuario = mysqli_real_escape_string($conn, $_POST["usuario"]);
 			$senha = mysqli_real_escape_string($conn, $_POST["senha"]);
 
+			// utilizando criptografia no login
+			$salt = "Lgjd1@";
+			$novaSenha = $salt.$senha;
+			$hash = hash("sha512", $novaSenha);
+
 			// usuario preencheu os dois campos
 			if (!empty($usuario) && !empty($senha)) {
 
-				echo  $sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') AND senha='$senha' ";
+				echo  $sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') AND senha='$hash' ";
 
 				$resultado = mysqli_query($conn, $sql);
 
