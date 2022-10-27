@@ -48,7 +48,7 @@ if ($_FILES['foto']['error'] != 4){
 	$uploaddir = 'fotos/';
 	$ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
 	$nome_arquivo = time() . "." . $ext;
-	$uploadfile = $uploaddir . $nome;
+	$uploadfile = $uploaddir . $nome_arquivo;
 
 //continuacao...	
 if (move_uploaded_file($_FILES['foto']['tmp_name'], $uploadfile)) {
@@ -64,6 +64,9 @@ Perceba que a única mudança é a adição de um campo chamado **foto** (que de
 Como exibir a imagem enviada **dinâmicamente**?
 ### Referências
  [Upload de arquivos com o método POST ](https://www.php.net/manual/pt_BR/features.file-upload.post-method.php)
+
  [move_uploaded_file](https://www.php.net/manual/en/function.move-uploaded-file.php)
+
  [Explicando mensagens de erro do move_uploaded_file](https://www.php.net/manual/pt_BR/features.file-upload.errors.php)
- [Leitura relacionada: Upload de imagens com redimensionamento em PHP](https://www.devmedia.com.br/upload-de-imagens-com-redimensionamento-em-php/26005)
+ 
+ [Leitura relacionada: Upload de imagens com redimensionamento em PHP](https://www.devmedia.com.br/classe-para-upload-de-imagens-em-php-com-redimensionamento/28573)
