@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Cadastro de usuário</title>
 	<link rel="stylesheet" href="css/estilo.css">
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<form method="POST" >
@@ -24,6 +25,31 @@
 			<div class="input-group">
 				<label>Numero telefônico</label>
 				<input type="text" name="numero"> 
+			</div>
+			
+			<div class="input-group">
+				<label>Estado</label>
+				<select name="estado" id="estado">
+					<?php
+						require_once("conecta.php");
+
+						$sql = "SELECT * FROM estados ORDER BY nome ASC";
+
+						$registros = mysqli_query($conn, $sql);
+
+						if (mysqli_num_rows($registros) > 0){
+							while ($registro = mysqli_fetch_array($registros)){
+								echo("<option value='$registro[id]'>$registro[nome]</option>");
+							}
+						}
+					?>
+				</select>
+			</div>
+			<div class="input-group">
+				<label>Cidade</label>
+				<select id="municipio" name="municipio">
+					<option selected>Escolha o município</option>
+				</select>
 			</div>
 			<div class="input-group">
 				<label>Email</label> 
@@ -52,6 +78,33 @@
 			<input type="submit" name="enviar" value="Enviar" class="btn btn_primary">
 		</fieldset>
 	</form>
+	<script type="text/javascript">
+		$('#municipio').attr('disabled', 'disabled');
+		
+		$(document).ready(function() {
+			$('#estado').change(function(){
+				var id_estado = $('#estado').val();
+
+				$.ajax({
+					url: 'buscar_cidades.php',
+					method: 'POST', 
+					data: {id_estado: id_estado},
+					dataType: 'json',
+
+					success: function (cidades){
+						$('select[name=municipio]').empty();
+						$.each(cidades, function(key, value){
+							$('select[name=municipio]').append('<option value='+ value.id + '>' + value.municipio + '</option>');
+							$('#municipio').removeAttr('disabled');
+						})
+					},
+					error: function (erro) {
+						alert("houve um erro");
+					} 
+				})
+			});
+		});
+	</script>
 	
 	<?php
 	// isset testa se uma variavel existe
@@ -75,6 +128,8 @@
 			$numero = $_POST["numero"];
 			$email = $_POST["email"];
 			$id_grupo = $_POST["grupo"];
+
+			echo ("id cidade: " . $_POST["municipio"]);
 
 			echo $sql = "INSERT INTO contatos (nome, numero, nasc, email, id_grupo) VALUES ('$nome', '$numero', '$nascimento', '$email', $id_grupo) ";
 			// echo para debugar a consulta sql gerada
