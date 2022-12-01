@@ -121,8 +121,10 @@
 			require_once("conecta.php");
 			
 			// a função mysqli_real_escape_string acrescenta caracteres da escape na string, impedindo que ela seja executada como comandos SQL, ou seja, qualquer informação será tratada como texo ou número
-			$usuario = mysqli_real_escape_string($conn, $_POST["usuario"]);
-			$senha = mysqli_real_escape_string($conn, $_POST["senha"]);
+			
+			// pegando os valores do formulário 
+			$usuario =$_POST["usuario"];
+			$senha = $_POST["senha"];
 
 			// utilizando criptografia no login
 			$salt = "Lgjd1@";
@@ -132,18 +134,25 @@
 			// usuario preencheu os dois campos
 			if (!empty($usuario) && !empty($senha)) {
 
-				echo  $sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') AND senha='$hash' ";
+				$sql = "SELECT * FROM `usuarios` WHERE (login='$usuario' OR email='$usuario') 
+					AND senha='$hash'";
 
 				$resultado = mysqli_query($conn, $sql);
 
+				// login ok
 				if (mysqli_num_rows($resultado) > 0) {
 					$_SESSION["usuario"] = $usuario;
+					$usuario = mysqli_fetch_array($resultado);
+					$_SESSION["id_usuario"] = $usuario["id"];
 					header("location: mostrar_agenda.php");
 
 				} else {
 					echo ("Usuário ou senha incorreto");
 				}
-			} else {
+			} 
+
+
+			else {
 				echo ("Preencha todos os dados corretamente antes de continuar");
 			}
 		}
